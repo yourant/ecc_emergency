@@ -1,0 +1,40 @@
+{% extends 'emergency/data/base.html' %}
+{% block title %}
+{% endblock %}
+{% block content %}
+    <div>
+        <ul>{
+            {% for response_key, response_value in response.items %}
+                {% if response_key == 'data'%}
+                    <li>&emsp;{{ response_key }}: {</li>
+                    {% for data_key, data_value in response_value.items %}
+
+                        {% if data_key == 'fields' %}
+                            <li>&emsp;&emsp;{{ data_key }}: {</li>
+                            {% for field_key, field_value in data_value.items %}
+                                <li>&emsp;&emsp;&emsp;{{ field_key }}: {{ field_value }},</li>
+                            {% endfor %}
+                            <li>&emsp;&emsp;},</li>
+                        {% elif data_key == 'render_items' %}
+                            <li>&emsp;&emsp;{{ data_key }}: [</li>
+                            {% for item in data_value %}
+                                <li>&emsp;&emsp;&emsp;{</li>
+                                {% for dict_key, dict_value in item.items %}
+                                    <li>&emsp;&emsp;&emsp;&emsp;{{ dict_key }}: {{ dict_value }},</li>
+                                {% endfor %}
+                                <li>&emsp;&emsp;&emsp;},</li>
+                            {% endfor %}
+                            <li>&emsp;&emsp;]</li>
+                        {% else %}
+                            <li>&emsp;&emsp;{{ data_key }}: {{ data_value }},</li>
+                        {% endif %}
+
+                    {% endfor %}
+                    <li>&emsp;}</li>
+                {% else %}
+                    <li>&emsp;{{ response_key }}: {{ response_value }},</li>
+                {% endif %}
+            {% endfor %}
+        }</ul>
+    </div>
+{% endblock %}

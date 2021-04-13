@@ -1,0 +1,28 @@
+{% extends 'emergency/data/base.html' %}
+{% block title %}
+{% endblock %}
+{% block content %}
+    <div>
+        <ul>{
+            {% for response_key, response_value in response.items %}
+                {% if response_key == 'data'%}
+                    <li>&emsp;{{ response_key }}: {</li>
+                    {% for data_key, data_value in response_value.items %}
+                        <li>&emsp;&emsp;{{ data_key }}: {</li>
+                        {% for index, value in data_value.items %}
+                            <li>&emsp;&emsp;&emsp;&emsp;{{ index }}: {</li>
+                            {% for item_key, item_value in value.items %}
+                                <li>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;{{ item_key }}: {{ item_value }},</li>
+                            {% endfor %}
+                            <li>&emsp;&emsp;&emsp;&emsp;},</li>
+                        {% endfor %}
+                        <li>&emsp;&emsp; },</li>
+                    {% endfor %}
+                    <li>&emsp;},</li>
+                {% else %}
+                    <li>&emsp;{{ response_key }}: {{ response_value }},</li>
+                {% endif %}
+            {% endfor %}
+        }</ul>
+    </div>
+{% endblock %}
